@@ -2,30 +2,41 @@ import express from 'express';
 import { createServer } from 'http';
 import initSocket from './init/socket.js';
 import { loadGameAssets } from './init/assets.js';
+import cors from 'cors';
 
 const app = express();
 const server = createServer(app);
 
 const PORT = 3000;
 
+// CORS 설정 추가
+app.use(
+  cors({
+    origin: 'http://127.0.0.1:5500', // 허용할 도메인 설정
+    methods: ['GET', 'POST'], // 허용할 메서드
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static('public'));
+
+// Socket.IO 초기화 (Socket.IO에서도 CORS 설정을 적용 가능)
 initSocket(server); // 소켓 추가
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello World</h1>");
+app.get('/', (req, res) => {
+  res.send('<h1>Hello World</h1>');
 });
 
 server.listen(PORT, async () => {
-  console.log(PORT + "포트로 서버가 열렸습니다.");
+  console.log(PORT + ' 포트로 서버가 열렸습니다.');
 
   try {
     const assets = await loadGameAssets();
     console.log(assets);
-    console.log("Assets loaded Successfull");
+    console.log('Assets loaded Successfully');
   } catch (error) {
-    console.error("Failed to load game assets : ", error);
+    console.error('Failed to load game assets: ', error);
   }
   // assets의 처리에서 파일 읽기를 실패할 경우
   // console.error()로 assets들을 가져오는 게 실패 알림
