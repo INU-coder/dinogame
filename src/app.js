@@ -12,7 +12,7 @@ const PORT = 3000;
 // CORS 설정 추가
 app.use(
   cors({
-    origin: 'http://127.0.0.1:5500', // 허용할 도메인 설정
+    origin: 'http://43.202.56.62:3000', // 허용할 도메인 설정
     methods: ['GET', 'POST'], // 허용할 메서드
   })
 );
