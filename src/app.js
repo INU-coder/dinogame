@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello World</h1>');
 });
 
-server.listen(PORT, async () => {
+server.listen(PORT, '0.0.0.0', async () => {
   console.log(PORT + ' 포트로 서버가 열렸습니다.');
 
   try {
